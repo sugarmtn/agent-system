@@ -103,6 +103,7 @@ Work producing no commit records the same line in the closeout `Approvals:` fiel
 ## 6. Naming & Change Management
 
 - Project docs live in the project repo as `docs/SPEC.md` and `docs/BUILD.md`, with `docs/modules/BUILD-<component>.md` and `docs/reference/` as needed. Slug-prefixed names (`SPEC-<s>.md`) only when one repo hosts multiple systems.
+- A project `README.md`, if the repo has one, is a short human-facing entry point only — identity (name, purpose, owner) and links to `docs/SPEC.md`, `docs/BUILD.md`, `docs/reference/`. It never restates their content: SPEC/BUILD are each a single living file per the rule above, and a README copy of their content drifts the same way a pasted runbook copy would (agent-system README, "Consumption": "Never copy content into working repos — copies drift"). A README predating agent-system adoption is trimmed to this scope as part of that adoption, not left duplicating what `docs/` now owns.
 - Runbooks: `RB-<nn>-<slug>.md`
 - Every document is a single living file, updated in place. No version suffixes, no `Superseded` copies — git history is the change record, and each document is treated as if it always contained its current content.
 - SPEC/BUILD docs carry no changelogs, revision tables, or execution evidence. Change narratives go in commit/PR messages and session closeouts only. (The WIP marker is the sole permitted transient content in an as-built doc — SPEC-AND-BUILD §2.)
