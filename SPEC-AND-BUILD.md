@@ -1,6 +1,6 @@
 # SPEC-AND-BUILD.md — Living Project Documentation
 
-**Owner:** Alan Strutz | **Last updated:** 2026-08-27 | **Load:** When the Change Gate (AGENT.md §3) applies, or when creating/updating project docs
+**Owner:** Alan Strutz | **Last updated:** 2026-08-28 | **Load:** When the Change Gate (AGENT.md §3) applies, or when creating/updating project docs
 
 Every project (app, pipeline, Azure configuration, integration) maintains exactly two living documents, plus optional modules and reference docs:
 
@@ -22,7 +22,7 @@ Both are **as-built documents**: they always describe the system as it currently
 1. **Interrogate before writing.** Missing success criteria, sources/targets, environment, or constraints → ask first.
 2. **Requirements are testable and numbered** (`R1, R2…`) so BUILD steps and verification can cite them. "Fast" is not a requirement; "full load completes in <15 min" is.
 3. **Out-of-scope is mandatory and non-empty.**
-4. **Open questions block approval.** The `## Open Questions` table must be resolved (or its recommendations explicitly accepted) before status moves to `Approved`.
+4. **Open questions block approval.** The `## Open Questions` table must be resolved (or its recommendations explicitly accepted) before status moves to `Approved`. Resolve every row **one at a time** with the approver — present a single question (with options considered and the recommendation) and wait for a response before raising the next — never batch the table into one combined ask. Only once every row is resolved does the document go up for approval.
 5. **One SPEC per system.** Independent systems get independent doc sets.
 
 **BUILD is drafted after SPEC approval and kept current through implementation** (use `templates/BUILD-TEMPLATE.md`); it is approved at closeout certification (§2, stage 4):
