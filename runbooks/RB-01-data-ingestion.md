@@ -1,11 +1,11 @@
 # RB-01 — Data Ingestion
 
-**Owner:** Alan Strutz | **Last updated:** 2026-08-27 | **Frequency:** As needed
+**Owner:** Alan Strutz | **Last updated:** 2026-09-07
 **Applies to:** New ingestion pipelines, new sources/endpoints/tables added to existing pipelines, changes to ingestion logic, control-table entries.
 **Load with:** AGENT.md (always) + the project's SPEC/BUILD docs (approved diff for changes; new docs for new pipelines).
 
 ### Purpose
-Standardize how an AI session builds or modifies data ingestion so that every pipeline is metadata-driven, idempotent, verified by counts, and documented — regardless of source (API/OData, database, file drop).
+Standardize how an AI session builds or modifies data ingestion so that every pipeline is metadata-driven, idempotent, verified by counts, and documented — regardless of source (API, database, file drop).
 
 ### Prerequisites
 - [ ] Approved spec naming: source system + object(s), target (server/database/schema/table), load pattern (full/incremental), schedule, environment.
@@ -22,7 +22,7 @@ Pull 1–5 sample records via the actual auth path the pipeline will use
 ```
 **Expected result:** Real payload/rows in hand; field list, types, and pagination/continuation behavior observed — not assumed from docs.
 **If it fails:** Auth and connectivity are the problem, not the pipeline. Resolve fully (401/403 → registration/consent/scopes; 400 → URL construction) before proceeding. Do not build pipeline logic around an endpoint you cannot call.
-**Note:** Fields with special characters (e.g., `@odata.etag`) require bracket-notation JSONPath: `$['@odata.etag']`.
+**Note:** Fields whose names contain special characters (`@`, `.`, spaces) require bracket-notation JSONPath — e.g. `$['@odata.etag']`.
 
 #### Step 2: Define the target schema explicitly
 ```
@@ -83,7 +83,7 @@ inventory doc with the new mapping row.
 ### Troubleshooting
 | Symptom | Likely cause | Fix |
 |---|---|---|
-| 401 from source API | Missing/incorrect app registration or consent on source side; wrong token scope | Verify registration exists in the source system, not only in Entra; re-check scope/resource in token request |
+| 401 from source API | Missing/incorrect app registration or consent on source side; wrong token scope | Verify registration exists in the source system, not only in your identity provider; re-check scope/resource in token request |
 | 400 from source API | Malformed URL (encoding, company/tenant segment, $filter syntax) | Reconstruct URL manually in an HTTP client until 200, then port back |
 | Nulls in fields that have data at source | JSONPath/mapping miss (special-char field names) | Use bracket notation `$['field']`; re-check mapping against raw payload |
 | Duplicates after re-run | Load not keyed; watermark overlap without merge | Switch to MERGE/upsert on the dedupe key; never band-aid with post-hoc DELETE |

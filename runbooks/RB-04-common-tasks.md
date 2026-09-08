@@ -1,8 +1,9 @@
 # RB-04 — Common AI Tasks
 
-**Owner:** Alan Strutz | **Last updated:** 2026-08-27 | **Frequency:** As needed
+**Owner:** Alan Strutz | **Last updated:** 2026-09-07
 **Applies to:** Research & vendor/tool evaluation, data analysis, document generation, data reconciliation & migration mapping. Four mini-procedures; load only the section matching the task.
 **Load with:** AGENT.md. Change Gate: usually exempt (read-only) — declare it. Reconciliation/migration output that informs a cutover or migration decision is a gate **trigger** (AGENT.md §3); the gate mechanics for that case are defined in §4D below.
+**Structure note:** these are mini-procedures, not full runbooks. They produce deliverables rather than system changes, so the per-step failure branches, Troubleshooting, and Rollback sections required by `templates/RUNBOOK-TEMPLATE.md` do not apply; Escalation is shared across all four sections. Definition-of-done lists carry the verification burden.
 
 ---
 

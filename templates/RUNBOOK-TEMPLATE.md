@@ -1,6 +1,6 @@
 # RB-<nn> — <Name>  *(or: <Project> — <Procedure>, for project runbooks)*
 
-**Owner:** <name> | **Last updated:** <date> | **Frequency:** <Daily/Weekly/As needed>
+**Owner:** <name> | **Last updated:** <date> | **Frequency:** <Daily/Weekly/Monthly — omit this field entirely if the procedure is not scheduled>
 **Applies to:** <the class of task this governs — precise enough that routing is unambiguous>
 **Follows:** <RB-nn, for project runbooks — list only the DELTA steps below> *(delete line for agent-system runbooks)*
 **Load with:** AGENT.md <+ project SPEC/BUILD docs if the Change Gate applies>

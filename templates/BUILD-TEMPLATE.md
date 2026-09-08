@@ -3,12 +3,12 @@
 | Field | Value |
 |---|---|
 | Status | Draft *(→ Approved at closeout certification, SPEC-AND-BUILD §2 stage 4; a material change returns it to Draft)* |
-| Spec | docs/SPEC.md (Approved <date> by <n>) |
+| Spec | docs/SPEC.md (Approved <date> by <approver>) |
 | Last updated | <date> |
 | Owner | <person accountable for the system> |
 | Runbook(s) | RB-<nn> <+ project runbook if any> |
 
-> **As-built document.** Describes how to construct this system from scratch to its current state. No change history — git holds that. Every step is desired-state, safe to re-run against a partially or fully built environment, and admits exactly one execution (a step requiring interpretation is a doc defect — SPEC-AND-BUILD §1.6).
+> **As-built document.** Describes how to construct this system from scratch to its current state. No change history — git holds that. Every step is desired-state, safe to re-run against a partially or fully built environment, and admits exactly one execution (a step requiring interpretation is a doc defect — SPEC-AND-BUILD §1b.6).
 
 > A `WIP` block may appear at the top of this document **only mid-change** (SPEC-AND-BUILD §2, stage 3). Its presence means the doc does not currently meet the as-built standard: any session loading it stops and reconciles before new work. It is the sole permitted transient content here.
 
@@ -17,7 +17,7 @@
 |---|---|---|---|
 | <resource/server/factory name> | | | |
 | <tenant / company ID> | | | |
-| <secret name (never value)> | | | Key Vault / secret store name |
+| <secret name (never value)> | | | Secret-store entry name — never the value |
 | <tool/runtime version pin> | | | Runtime, CLI, key package versions — rebuilds must not diverge on "latest" |
 
 Steps reference parameters as `{param}`. No environment values appear in steps.
@@ -42,7 +42,7 @@ Steps reference parameters as `{param}`. No environment values appear in steps.
 - **Verify:** <timeless check + expected value — criteria, never dated evidence>
 - **Idempotency:** <"re-run converges" or ⚠ NON-IDEMPOTENT + guard: "skip if <check>">
 
-### Step 2 — <n>  (→ R2, R3)
+### Step 2 — <imperative name>  (→ R2, R3)
 - **Action:**
 - **Expected state:**
 - **Verify:**
