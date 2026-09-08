@@ -1,6 +1,6 @@
 # Agent Instruction System
 
-**Owner:** Alan Strutz | **Last updated:** 2026-08-27
+**Owner:** Alan Strutz | **Last updated:** 2026-09-07
 
 A modular instruction set for AI sessions built on progressive disclosure: a small core is always loaded; everything else loads only when the task requires it.
 
@@ -10,6 +10,7 @@ A modular instruction set for AI sessions built on progressive disclosure: a sma
 AGENT.md                      ← always loaded (mode, routing, safety, closeout, naming)
 SPEC-AND-BUILD.md             ← loaded when the Change Gate applies or project docs are touched
 templates/
+  PROPOSAL-TEMPLATE.md        ← optional pre-stage; never auto-loaded (AGENT.md §1.1)
   SPEC-TEMPLATE.md
   BUILD-TEMPLATE.md
   RUNBOOK-TEMPLATE.md
@@ -22,7 +23,7 @@ runbooks/
 
 ## Home & deployment
 
-**Canonical home: a dedicated git repo** (e.g., `sugarmtn/agent-system`). All changes to these documents go through PRs, approved by a human approver (AGENT.md §3). No direct pushes to main.
+**Canonical home: `sugarmtn/agent-system`** (private). All changes to these documents go through PRs, approved by a human approver (AGENT.md §3). No direct pushes to main.
 
 **Version pinning is mandatory.** Working repos consume a *pinned commit* of this repo, never a floating head:
 
@@ -30,7 +31,7 @@ runbooks/
 - **Synced checkouts** record the synced SHA in the working repo's `CLAUDE.md`.
 - **claude.ai Projects** record the SHA in the project instructions at each refresh.
 
-Every session records the SHA (or tag) in force in its closeout (`Agent-system:` line, AGENT.md §5.1) — which ruleset governed a session must always be reconstructable. **Advancing a repo's pin is a deliberate RB-03 change** (smallest change, one concern): adoption of new rules is chosen, never passive.
+Every session records the SHA (or tag) in force in its closeout (`Agent-system:` line, AGENT.md §5.2) — which ruleset governed a session must always be reconstructable. **Advancing a repo's pin is a deliberate RB-03 change** (smallest change, one concern): adoption of new rules is chosen, never passive.
 
 Consumption:
 - **Claude Code (primary):** each working repo's `CLAUDE.md` imports AGENT.md from this repo (pinned submodule, or synced checkout with recorded SHA) and adds only repo-specific context. Runbooks/templates are referenced by path and read on demand. Never copy content into working repos — copies drift.

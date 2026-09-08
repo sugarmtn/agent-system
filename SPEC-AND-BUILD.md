@@ -1,8 +1,8 @@
 # SPEC-AND-BUILD.md — Living Project Documentation
 
-**Owner:** Alan Strutz | **Last updated:** 2026-08-28 | **Load:** When the Change Gate (AGENT.md §3) applies, or when creating/updating project docs
+**Owner:** Alan Strutz | **Last updated:** 2026-09-07 | **Load:** When the Change Gate (AGENT.md §3) applies, or when creating/updating project docs
 
-Every project (app, pipeline, Azure configuration, integration) maintains exactly two living documents, plus optional modules and reference docs:
+Every project (app, pipeline, infrastructure or platform configuration, integration) maintains exactly two living documents, plus optional modules and reference docs:
 
 1. **SPEC** — *what* the system is and *why*: current requirements, scope, constraints. Written for the approver.
 2. **BUILD** — *how* to construct the system from scratch: ordered, idempotent, parameterized steps. Written for a fresh session with no prior context.
@@ -17,15 +17,16 @@ Both are **as-built documents**: they always describe the system as it currently
 
 ## 1. Initial Creation
 
-**SPEC first** (use `templates/SPEC-TEMPLATE.md`):
+**§1a — SPEC first** (use `templates/SPEC-TEMPLATE.md`):
 
 1. **Interrogate before writing.** Missing success criteria, sources/targets, environment, or constraints → ask first.
-2. **Requirements are testable and numbered** (`R1, R2…`) so BUILD steps and verification can cite them. "Fast" is not a requirement; "full load completes in <15 min" is.
+2. **Requirements are testable and numbered** (`R1, R2…`) so BUILD steps and verification can cite them. "Fast" is not a requirement; "full load completes in <15 min" is. **IDs are permanent:** a retired requirement is removed from the table, but its ID is never reused, and surviving requirements are never renumbered. **Requirements may be negative:** a behavior the system must never exhibit is a requirement, not a scope exclusion — only requirements get BUILD steps and coverage.
 3. **Out-of-scope is mandatory and non-empty.**
 4. **Open questions block approval.** The `## Open Questions` table must be resolved (or its recommendations explicitly accepted) before status moves to `Approved`. Resolve every row **one at a time** with the approver — present a single question (with options considered and the recommendation) and wait for a response before raising the next — never batch the table into one combined ask. Only once every row is resolved does the document go up for approval.
 5. **One SPEC per system.** Independent systems get independent doc sets.
+6. **Design rationale is recorded, timelessly.** A decision a competent fresh session might reasonably reverse earns an entry in the SPEC's `## Design Rationale`: the choice as a present-tense statement, why it holds, and the alternative rejected. Entries are written as if the design was always this way — a rationale that narrates a change ("we moved from X to Y") is a changelog and is forbidden by AGENT.md §6. A resolved Open Question that turned on a real tradeoff graduates into a rationale entry; one that merely supplied a missing fact does not — facts belong in BUILD Parameters or `docs/reference/`.
 
-**BUILD is drafted after SPEC approval and kept current through implementation** (use `templates/BUILD-TEMPLATE.md`); it is approved at closeout certification (§2, stage 4):
+**§1b — BUILD is drafted after SPEC approval and kept current through implementation** (use `templates/BUILD-TEMPLATE.md`); it is approved at closeout certification (§2, stage 4):
 
 1. **Traceability.** Every BUILD step cites the requirement(s) it realizes (`→ R3`); every requirement is realized by at least one step. Gaps in either direction are errors.
 2. **Steps are desired-state and idempotent.** Each step converges the environment toward the target (create-or-update, `CREATE OR ALTER`, upsert, declarative config). Running BUILD against a half-built or fully-built environment must be safe. A step that cannot be made idempotent is marked `⚠ NON-IDEMPOTENT` with a guard check ("skip if X exists") preceding it.
@@ -36,7 +37,11 @@ Both are **as-built documents**: they always describe the system as it currently
 
 ## 2. Change Workflow (the gate in practice)
 
-Gated work — a new system or a change to an existing one — passes **four stages. Each stage is approved separately; never present two stages for one combined approval.** At every approval, the artifact is presumed **not** to satisfy the SPEC until an alignment section demonstrates it — conformance is shown, never assumed.
+Gated work — a new system or a change to an existing one — passes **four stages**, optionally preceded by stage 0. **Each stage is approved separately; never present two stages for one combined approval.** At every approval, the artifact is presumed **not** to satisfy the SPEC until an alignment section demonstrates it — conformance is shown, never assumed.
+
+**Stage 0 — Proposal (optional).** Thinking, before requirements exist. Proposals live in `docs/proposals/<slug>.md`, one file per proposal (use `templates/PROPOSAL-TEMPLATE.md`); several may exist for one system and may contradict each other — that is their purpose, and competing proposals are live alternatives, not superseded copies. Status is `Draft | Approved` (AGENT.md §6). Approving a proposal selects it as the basis for stage 1 and authorizes **drafting only**: stages 1–4 still apply in full, and no environment is touched on a proposal's authority. Approval is recorded in the ledger format, and the approving session's closeout carries an open item for the integration. The approved proposal is **deleted by the session that integrates it into the SPEC** — one that outlives its integration is drift (§3). Unapproved proposals are left in place untouched, and no proposal enters a session's context unless the human names the file (AGENT.md §1.1).
+
+**When the proposal changes an existing system** rather than creating one, the same mechanics apply with two additions: (a) it seeds a SPEC *diff*, and the touched SPEC's status returns to `Draft` under the material-change rule (AGENT.md §6); (b) where it reverses a decision the SPEC already records, the corresponding `## Design Rationale` entry is **rewritten**, never appended to — two entries disagreeing about the same decision is the changelog anti-pattern in another costume.
 
 **Stage 1 — SPEC (intent).** Draft the SPEC (new system) or the SPEC diff (change; set the touched document's status to `Draft`). Requirements that arrived verbally are written down here (AGENT.md §3, requirement capture). Present what changes, what it affects, and what it deliberately does not touch. Approval per AGENT.md §3, recorded in the ledger format.
 
@@ -65,10 +70,11 @@ Gated work — a new system or a change to an existing one — passes **four sta
 ## Anti-patterns (reject on sight)
 
 - A changelog, revision table, or "Change 7: …" section inside SPEC or BUILD → history lives in git only.
+- A Design Rationale entry that narrates a change ("originally X, now Y") rather than stating a standing reason → that is a changelog wearing a new hat.
 - BUILD steps that patch earlier steps' output ("Step 14: alter the table from Step 3") when Step 3 should simply define the final table.
 - Hardcoded environment values in steps → belongs in the Parameters table.
 - Committed execution plans or execution logs → plans are ephemeral, chat-only; only their outcome merges into BUILD.
 - Any transient block in an as-built doc other than the WIP marker (§2, stage 3) — and a WIP block that outlives its change is itself a defect to reconcile.
 - "Docs update deferred" in a closeout marked complete → the change isn't complete.
 - A BUILD doc that assumes knowledge from prior sessions ("configure it the same way as the other pipeline") → fails the fresh-session rebuild standard.
-- A BUILD step that requires interpretation to execute → tighten it (§1.6); two sessions must not be able to execute it differently.
+- A BUILD step that requires interpretation to execute → tighten it (§1b.6); two sessions must not be able to execute it differently.

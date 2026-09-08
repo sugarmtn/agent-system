@@ -1,6 +1,6 @@
 # RB-03 — Maintaining & Updating Code
 
-**Owner:** Alan Strutz | **Last updated:** 2026-08-27 | **Frequency:** As needed
+**Owner:** Alan Strutz | **Last updated:** 2026-09-07
 **Applies to:** Bug fixes, enhancements, refactors, dependency updates, config changes to existing code/pipelines/apps.
 **Load with:** AGENT.md. Change Gate applies per AGENT.md §3 — including its precedence rule: single bug fixes with a reproducible case are exempt from approval **unless the change touches production data or configuration**, in which case the gate applies (active production incidents: AGENT.md §3b break-glass). Declare the exemption or the gate at the start. §3a still applies either way: if the fix alters what a rebuild should produce, update BUILD in the same session.
 
