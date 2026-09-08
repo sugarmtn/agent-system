@@ -2,3 +2,6 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Local agent tool settings — machine-specific paths, never shared
+.claude/settings.local.json
