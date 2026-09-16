@@ -1,6 +1,6 @@
 # RB-02 — Building Apps
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-07
+**Owner:** Alan Strutz | **Last updated:** 2026-09-08
 **Applies to:** New applications and new user-facing features: web apps, internal tools, custom-coded and low-code platform apps, dashboards with interactivity.
 **Load with:** AGENT.md + the project's SPEC/BUILD docs. New apps always pass the Change Gate (SPEC → execution plan → implement → BUILD certification) — no exceptions.
 
