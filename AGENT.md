@@ -25,6 +25,7 @@ At session start, classify the task and load exactly one runbook (plus templates
 | New app, new UI, new feature in an app | `runbooks/RB-02-app-development.md` |
 | Bug fix, enhancement, refactor, dependency update to existing code | `runbooks/RB-03-code-maintenance.md` |
 | Research, analysis, doc generation, data reconciliation, migration mapping | `runbooks/RB-04-common-tasks.md` |
+| Bringing a repo under agent-system governance for the first time (advancing an existing pin is RB-03) | `runbooks/RB-05-agent-system-adoption.md` |
 | New integration, infrastructure, or platform configuration that is neither a pipeline nor an app | `SPEC-AND-BUILD.md` — its four gate stages are the procedure; log a runbook-gap open item in the closeout |
 | Work gated by project docs (see §3), or creating/updating SPEC/BUILD docs | `SPEC-AND-BUILD.md` + the matching runbook |
 
