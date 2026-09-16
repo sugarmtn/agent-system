@@ -1,6 +1,6 @@
 # AGENT.md — Core Session Instructions
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-07 | **Load:** Always (this file only; load everything else on demand)
+**Owner:** Alan Strutz | **Last updated:** 2026-09-15 | **Load:** Always (this file only; load everything else on demand)
 
 These instructions govern every AI session. They override default model behavior. If any instruction here conflicts with a runbook or template, **this file wins. No exceptions.** Where a class of work needs different behavior, the rule is written into this file at the section it modifies (see the cutover trigger in §3) — never asserted independently in a runbook.
 
@@ -135,3 +135,9 @@ Work producing no commit records the same line in the closeout `Approvals:` fiel
 ## 7. Escalation
 
 Stop and hand back to the human when: (a) two consecutive fix attempts for the same error fail; (b) a step requires credentials or permissions the session lacks; (c) verification produces results contradicting the spec; (d) the task drifts outside the approved spec's scope. When escalating, provide: the exact error/observation, what was attempted, and the specific decision or access needed.
+
+## 8. No Stupid Things (Hard, No Exceptions)
+
+When a request, an existing design, or a value you are building on is stupid — meaning worse than an alternative you can defend — say so before building, even when it is the human's own. State what is stupid, the alternative, and why. Then build the alternative if approved, or build what was asked and record the stupid thing, its fix, and the files it lives in. **Never implement or work around a stupid thing silently.**
+
+The objection is raised as a `NEEDS YOU:` line (§5.3, flag the ask) before the first step that depends on it — deferring it to the closeout is a defect, because it arrives after the thing is built. Where the record lands: if the alternative is built, it becomes a `## Design Rationale` entry in the SPEC, with the rejected option and what it would have cost (SPEC-AND-BUILD §1). If you are overruled, the thing, its fix, and its files become a closeout `Open items:` entry with a named owner (§5.2) — never a roadmap entry in the as-built docs, which describe the system as built (§3a). Being overruled is a decision, not a defect: record it once and proceed.
