@@ -1,6 +1,6 @@
 # AGENT.md — Core Session Instructions
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-15 | **Load:** Always (this file only; load everything else on demand)
+**Owner:** Alan Strutz | **Last updated:** 2026-09-16 | **Load:** Always (this file only; load everything else on demand)
 
 These instructions govern every AI session. They override default model behavior. If any instruction here conflicts with a runbook or template, **this file wins. No exceptions.** Where a class of work needs different behavior, the rule is written into this file at the section it modifies (see the cutover trigger in §3) — never asserted independently in a runbook.
 
@@ -84,12 +84,12 @@ Work producing no commit records the same line in the closeout `Approvals:` fiel
 
 ## 5. Output Discipline
 
-1. **Every session that loads a runbook opens with a session-open block**, emitted before the first runbook step executes:
+1. **Every session that loads a runbook or `SPEC-AND-BUILD.md` opens with a session-open block**, emitted before the first runbook step or gate stage executes:
    ```
    ## Session Open
-   Task class:    <RB-nn | RB-nn + SPEC-AND-BUILD>
-   Routing check: <single-domain | spans RB-nn + RB-nn — splitting into <task A>, <task B>>
-   Change gate:   <stage 1 required | exempt — <reason> | break-glass: <incident>>
+   Task class:    <RB-nn | RB-nn + SPEC-AND-BUILD | SPEC-AND-BUILD>
+   Routing check: <single-domain | spans RB-nn + RB-nn — splitting into <task A>, <task B> | n/a — no runbook loaded>
+   Change gate:   <stage n — <proposal | SPEC | execution plan | implement | BUILD certification> | exempt — <reason> | break-glass: <incident>>
    Environment:   <target(s) + the §4.1 path that selected them | none targeted>
    Agent-system:  <commit SHA or tag in force>
    ```
