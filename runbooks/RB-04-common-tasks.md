@@ -1,6 +1,6 @@
 # RB-04 — Common AI Tasks
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-07
+**Owner:** Alan Strutz | **Last updated:** 2026-09-16
 **Applies to:** Research & vendor/tool evaluation, data analysis, document generation, data reconciliation & migration mapping. Four mini-procedures; load only the section matching the task.
 **Load with:** AGENT.md. Change Gate: usually exempt (read-only) — declare it. Reconciliation/migration output that informs a cutover or migration decision is a gate **trigger** (AGENT.md §3); the gate mechanics for that case are defined in §4D below.
 **Structure note:** these are mini-procedures, not full runbooks. They produce deliverables rather than system changes, so the per-step failure branches, Troubleshooting, and Rollback sections required by `templates/RUNBOOK-TEMPLATE.md` do not apply; Escalation is shared across all four sections. Definition-of-done lists carry the verification burden.
@@ -42,12 +42,12 @@
 
 **Purpose:** Trustworthy source↔target mappings and match results.
 
-1. **Gate mechanics (AGENT.md §3 trigger).** When the output informs a cutover or migration decision, the **method note is the gate artifact**: match keys, tolerances, populations/snapshots used, the authoritative side when systems disagree, and bucket definitions — **approved before the full run**, recorded in the approval ledger format. There is no separate execution-plan stage: for analysis work, the method note *is* the plan. At closeout, the workbook is **certified against the approved method** — buckets sum, dispositions complete, method followed; any divergence from the approved method is flagged explicitly, never silently absorbed.
+1. **Gate mechanics (AGENT.md §3 trigger).** When the output informs a cutover or migration decision, the **method note is the gate artifact**: match keys, tolerances, the source and target environments read, populations/snapshots used, the authoritative side when systems disagree, and bucket definitions — **approved before the full run**, recorded in the approval ledger format. Naming the environments is what lets its approval carry them under AGENT.md §4.1(b), the same way an execution plan's approval does. There is no separate execution-plan stage: for analysis work, the method note *is* the plan. At closeout, the workbook is **certified against the approved method** — buckets sum, dispositions complete, method followed; any divergence from the approved method is flagged explicitly, never silently absorbed.
 2. **Define match keys and tolerances up front** with the human: what constitutes a match, acceptable variance (default: zero), and the authoritative side when systems disagree. These rulings populate the method note.
 3. **Work from complete populations,** not samples, for the final result. Samples are for method development only, and outputs are labeled SAMPLE until the full run.
 4. **Every row lands in exactly one bucket:** matched / source-only / target-only / matched-with-variance. Buckets must sum to totals — publish the sum check.
 5. **Variance rows get dispositions,** not deletions: each carries explanation, owner, or `unresolved`. Unresolved count is a headline metric, never a footnote.
-6. **Deliverable:** the mapping/recon workbook (stable IDs per row, consistent column dictionary), summary tab with bucket totals + sum check, method note (keys, tolerances, run date, source snapshots used). The workbook is row-level data by design — file it per AGENT.md §4.6 to the human-designated location and record the location in the closeout.
+6. **Deliverable:** the mapping/recon workbook (stable IDs per row, consistent column dictionary), summary tab with bucket totals + sum check, method note (keys, tolerances, environments, run date, source snapshots used). The workbook is row-level data by design — file it per AGENT.md §4.6 to the human-designated location and record the location in the closeout.
 7. **Definition of done:** buckets sum; every variance dispositioned or explicitly unresolved with owner; method note complete and matching the approved version; workbook filed and referenced in closeout.
 
 ---
