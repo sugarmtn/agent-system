@@ -1,6 +1,6 @@
 # RB-01 — Data Ingestion
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-07
+**Owner:** Alan Strutz | **Last updated:** 2026-09-08
 **Applies to:** New ingestion pipelines, new sources/endpoints/tables added to existing pipelines, changes to ingestion logic, control-table entries.
 **Load with:** AGENT.md (always) + the project's SPEC/BUILD docs (approved diff for changes; new docs for new pipelines).
 

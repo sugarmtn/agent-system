@@ -1,6 +1,6 @@
 # SPEC-AND-BUILD.md — Living Project Documentation
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-07 | **Load:** When the Change Gate (AGENT.md §3) applies, or when creating/updating project docs
+**Owner:** Alan Strutz | **Last updated:** 2026-09-08 | **Load:** When the Change Gate (AGENT.md §3) applies, or when creating/updating project docs
 
 Every project (app, pipeline, infrastructure or platform configuration, integration) maintains exactly two living documents, plus optional modules and reference docs:
 
