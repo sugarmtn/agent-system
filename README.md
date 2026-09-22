@@ -1,6 +1,6 @@
 # Agent Instruction System
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-16
+**Owner:** Alan Strutz | **Last updated:** 2026-09-22
 
 A modular instruction set for AI sessions built on progressive disclosure: a small core is always loaded; everything else loads only when the task requires it.
 
@@ -39,6 +39,8 @@ Consumption:
 - **claude.ai Projects (secondary):** AGENT.md as project instructions; runbooks + templates as project files, refreshed from the repo with the SHA recorded.
 
 Whichever host: do NOT paste all runbooks into the always-loaded instructions — that defeats the design.
+
+**Load order matters for prompt caching.** A project's `CLAUDE.md` (or project instructions) should import AGENT.md — and any runbook/template a task needs — *before* project-specific or task-specific content. Hosts that cache a stable prompt prefix (Claude Code, the Claude API) only get that benefit when the prefix is actually stable across turns and sessions; putting task-specific detail ahead of the shared ruleset busts the cache for content that never needed to change.
 
 ## Project layering
 

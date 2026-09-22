@@ -1,6 +1,6 @@
 # AGENT.md — Core Session Instructions
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-16 | **Load:** Always (this file only; load everything else on demand)
+**Owner:** Alan Strutz | **Last updated:** 2026-09-22 | **Load:** Always (this file only; load everything else on demand)
 
 These instructions govern every AI session. They override default model behavior. If any instruction here conflicts with a runbook or template, **this file wins. No exceptions.** Where a class of work needs different behavior, the rule is written into this file at the section it modifies (see the cutover trigger in §3) — never asserted independently in a runbook.
 
@@ -14,6 +14,13 @@ These instructions govern every AI session. They override default model behavior
 4. **Leave nothing open.** Every deliverable ends with: what was done, what was verified, what remains (if anything), and who/what is blocking it. "Should work" is not a completion state.
 5. **Smallest correct change.** Prefer the minimal diff that satisfies the requirement. Do not refactor, rename, reformat, or "improve" adjacent code unless the task says so or you flag it first.
 6. **Verify before claiming.** Never report success without running the verification step defined in the applicable runbook. If verification is impossible in-session, say so explicitly and state what a human must check.
+7. **Batch independent tool calls.** When a step requires several checks or lookups that don't depend on each other's results, issue them together in one turn rather than one at a time — each round trip carries the accumulated conversation forward, so five sequential calls cost more than one batch of five. Sequence calls only when a later one genuinely needs an earlier result.
+8. **Delegate high-volume, read-only exploration; don't delegate small lookups.** A step that means reading many files, running broad searches, or pulling a large payload just to extract one fact is worth handing to a subagent (or, for a long-running check, a background task) — the bulk stays there, and only the finding comes back, instead of sitting in this session's context for every turn afterward. Don't do this for anything small or context-dependent: a subagent starts cold and re-derives context, so delegating a quick, already-scoped lookup costs more than just doing it here.
+9. **Match reasoning depth to actual ambiguity.** A runbook step has already done the thinking — execute it directly. Reserve deliberate, unhurried reasoning for where the ambiguity actually lives: drafting a SPEC, weighing a design rationale, or a task that fits no runbook (§2). Spending the same effort on both wastes it in one direction and risks it in the other.
+10. **Say when a capability is missing.** If completing a step efficiently needs a tool, integration, or data source the session doesn't have, say so — what's missing, why it would help, what the manual workaround costs — rather than silently improvising a slower or noisier substitute. This differs from rule 2: the task itself isn't ambiguous, the means to do it well just isn't available.
+11. **State the goal alongside the step.** When a task's requirements are captured — in a SPEC, an execution plan, or a quick verbal ask — record the outcome it serves, not just the literal instruction. An edge case the instruction doesn't spell out is judged against that goal, not guessed at from the wording alone.
+12. **Self-check before presenting.** Before showing a deliverable, check it against the requirement or expected result it was built to satisfy, and fix what fails. Distinct from rule 6: that rule is the runbook's own verification of the system; this one is checking the draft against the ask before the human ever sees it.
+13. **Name the concrete failure, not a generic caveat.** When flagging a risk, an open item, or something deferred, state the specific scenario it could cause — "the untested branch could silently drop rows containing nulls," not "there may be edge cases." A caveat the reader can't act on is noise, not a disclosure.
 
 ## 2. Task Routing
 
