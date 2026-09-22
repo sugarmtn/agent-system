@@ -1,7 +1,7 @@
 # RB-05 — Agent-System Adoption
 
 **Owner:** Alan Strutz | **Last updated:** 2026-09-22
-**Applies to:** Bringing a repo under agent-system governance for the first time — submodule pin, `CLAUDE.md` wiring, and reconciling existing docs to the §6 naming scheme. **Not** advancing an existing pin (that is an RB-03 change, README "Home & deployment"), and not repos that host no system a SPEC/BUILD would describe.
+**Applies to:** Bringing a repo under agent-system governance for the first time — submodule pin, `CLAUDE.md` wiring, and reconciling existing docs to the SPEC-AND-BUILD §4 naming scheme. **Not** advancing an existing pin (that is an RB-03 change, README "Home & deployment"), and not repos that host no system a SPEC/BUILD would describe.
 **Load with:** AGENT.md + the agent-system README ("Home & deployment", "Project layering"). Change Gate per AGENT.md §3 — adoption is normally exempt (repo configuration, no production system touched); declare the exemption at the start.
 
 ### Purpose
@@ -55,15 +55,15 @@ explicitly any folder that predates adoption and is NOT yet governed.
 **Expected result:** A fresh session can tell from `CLAUDE.md` alone which parts of the repo follow agent-system conventions. Unmigrated folders are named as unmigrated, with their migration identified as a separate future task.
 **If it fails:** If the boundary cannot be stated because nobody knows which folders were built under which conventions, that is the finding — record it as an Open Item with a named owner rather than guessing. An unstated boundary lets a session assume conventions hold where they do not.
 
-#### Step 5: Reconcile existing docs to the §6 naming scheme
+#### Step 5: Reconcile existing docs to the SPEC-AND-BUILD §4 naming scheme
 ```
 Within the adopted scope only:
 - SPEC/BUILD docs at a folder root → docs/SPEC.md, docs/BUILD.md
-- README trimmed to entry-point scope (identity + links), per AGENT.md §6
+- README trimmed to entry-point scope (identity + links), per SPEC-AND-BUILD §4
 - Any doc outside the scheme → flag it; do not silently rename or absorb it
 ```
-**Expected result:** Adopted folders match §6. Out-of-scope folders are untouched and declared per Step 4.
-**If it fails (a doc's correct home is genuinely unclear, or an existing instruction file conflicts with AGENT.md):** Do not subordinate it silently. Present the conflict and the options; a repo-level instruction file that contradicts AGENT.md is a §8 objection, raised as a `NEEDS YOU:` line before the reconciliation proceeds.
+**Expected result:** Adopted folders match SPEC-AND-BUILD §4. Out-of-scope folders are untouched and declared per Step 4.
+**If it fails (a doc's correct home is genuinely unclear, or an existing instruction file conflicts with AGENT.md):** Do not subordinate it silently. Present the conflict and the options; a repo-level instruction file that contradicts AGENT.md is a §7 objection, raised as a `NEEDS YOU:` line before the reconciliation proceeds.
 
 #### Step 6: Commit the adoption as one change
 ```
@@ -78,7 +78,7 @@ Confirm .claude/settings.local.json is gitignored (machine-specific paths).
 - [ ] A fresh session in the repo has AGENT.md loaded via the `@` import — verified by opening one, not by reading the file
 - [ ] `CLAUDE.md` records the pinned-on date and the RB-03 pin-advance rule
 - [ ] Adoption boundary stated: every top-level folder is either governed or named as not-yet-governed
-- [ ] Adopted docs match §6 naming; out-of-scope folders untouched
+- [ ] Adopted docs match SPEC-AND-BUILD §4 naming; out-of-scope folders untouched
 - [ ] No agent-system content copied into the repo — referenced by path only
 - [ ] `.claude/settings.local.json` gitignored
 - [ ] Closeout block produced (AGENT.md §5)
@@ -98,4 +98,4 @@ Adoption is reversible up to the commit: `git submodule deinit -f agent-system`,
 |---|---|
 | Repo hosts no system a SPEC/BUILD would describe (reference or context repo) | Not an adoption target — say so and stop; do not adopt "for consistency" |
 | An existing `agent-system/` directory is a copy, not a submodule | Stop; removal is destructive (§4.2) and the copy may have drifted — hand to the human with the diff against the intended pin |
-| Repo-level instruction file contradicts AGENT.md | Present the conflict as a `NEEDS YOU:` line (§8); never resolve it by silently subordinating one to the other |
+| Repo-level instruction file contradicts AGENT.md | Present the conflict as a `NEEDS YOU:` line (§7); never resolve it by silently subordinating one to the other |

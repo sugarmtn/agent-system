@@ -46,6 +46,12 @@ own Rn — it needs a BUILD step and a verification the same way a positive one 
 | Risk | Impact | Mitigation |
 |---|---|---|
 
+## Known Deficiencies *(omit while empty)*
+| Deficiency (present tense) | Better alternative | Files / objects |
+|---|---|---|
+
+<Choices built as instructed over the agent's flagged objection — SPEC-AND-BUILD §4. Delete a row when the fix lands.>
+
 ## Design Rationale
 <Why the system is shaped this way — the decisions a competent fresh session
 might otherwise reverse. Written timelessly: state what is true and why it

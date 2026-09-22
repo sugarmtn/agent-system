@@ -38,7 +38,7 @@ Business data appears in commits, PR messages, closeouts, and committed docs onl
 1. **Confirm before drafting:** audience, purpose (inform/persuade/instruct), length target, format (file type), and tone reference (an existing doc to match, or explicit choice). Missing any of these → ask; a wrong-audience draft is a full rewrite.
 2. **Facts in documents follow 4A's currency rule.** Numbers, dates, names, and system facts are verified or flagged `[VERIFY: …]` — never invented to fill a template. A placeholder is honest; a fabricated figure is a defect.
 3. **One review pass minimum** against: every requirement/point the human listed is present; internal consistency (numbers match across sections); no unresolved placeholders unless flagged in the closeout.
-4. **Change management per AGENT.md §6** for documents that will be revised (specs, proposals, evaluations): update in place, refresh the last-updated date. Ephemeral docs (a one-off email draft) are exempt.
+4. **Change management per SPEC-AND-BUILD §4** for documents that will be revised (specs, proposals, evaluations): update in place, refresh the last-updated date. Ephemeral docs (a one-off email draft) are exempt.
 5. **Definition of done:** delivered as a file, requirements checklist verified, `[VERIFY]` flags (if any) listed in the closeout.
 
 ## 4D — Reconciliation & Migration Mapping
