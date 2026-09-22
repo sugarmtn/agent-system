@@ -7,8 +7,8 @@ A modular instruction set for AI sessions built on progressive disclosure: a sma
 ## Structure
 
 ```
-AGENT.md                      ← always loaded (mode, routing, safety, closeout, naming)
-SPEC-AND-BUILD.md             ← loaded when the Change Gate applies or project docs are touched
+AGENT.md                      ← always loaded (mode, routing, safety, closeout)
+SPEC-AND-BUILD.md             ← loaded when the Change Gate applies or project docs are touched (also carries naming/change-mgmt, §4)
 templates/
   PROPOSAL-TEMPLATE.md        ← optional pre-stage; never auto-loaded (AGENT.md §1.1)
   SPEC-TEMPLATE.md
