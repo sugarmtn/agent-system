@@ -1,9 +1,12 @@
 # RB-04 — Common AI Tasks
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-16
+**Owner:** Alan Strutz | **Last updated:** 2026-09-22
 **Applies to:** Research & vendor/tool evaluation, data analysis, document generation, data reconciliation & migration mapping. Four mini-procedures; load only the section matching the task.
 **Load with:** AGENT.md. Change Gate: usually exempt (read-only) — declare it. Reconciliation/migration output that informs a cutover or migration decision is a gate **trigger** (AGENT.md §3); the gate mechanics for that case are defined in §4D below.
 **Structure note:** these are mini-procedures, not full runbooks. They produce deliverables rather than system changes, so the per-step failure branches, Troubleshooting, and Rollback sections required by `templates/RUNBOOK-TEMPLATE.md` do not apply; Escalation is shared across all four sections. Definition-of-done lists carry the verification burden.
+
+### Evidence Minimization (shared across all four sections)
+Business data appears in commits, PR messages, closeouts, and committed docs only as keys, counts, aggregates, hashes, or masked values. Raw row contents may be displayed in-session for verification, but the durable record states which keys were checked and the result ("3 rows spot-checked field-by-field: match") — never the field values themselves. Deliverables whose *purpose* is row-level data (reconciliation workbooks, mapping files) are exempt in content but are filed to the location the human designates — not committed to code or agent-system repos by default — and the closeout records that location. A project's agent-context file (`CLAUDE.md` in Claude Code; the project instructions in a hosted project) may relax this rule explicitly for genuinely non-sensitive data.
 
 ---
 
@@ -25,7 +28,7 @@
 2. **Profile before analyzing:** row counts, null rates on key columns, duplicate keys, min/max on dates. Report data-quality findings even when unasked — they bound the conclusions.
 3. **Show the lineage:** every figure in the output traceable to a query/step that produced it. No orphan numbers.
 4. **Validate:** at least one independent cross-check of the headline number (different method, known benchmark, or source-system total).
-5. **Deliverable:** answer up front, method, caveats/data-quality notes, queries or notebook as an appendix/file. Row-level outputs follow AGENT.md §4.6: filed to the human-designated location, with the closeout recording where.
+5. **Deliverable:** answer up front, method, caveats/data-quality notes, queries or notebook as an appendix/file. Row-level outputs follow Evidence Minimization above: filed to the human-designated location, with the closeout recording where.
 6. **Definition of done:** headline number cross-checked; caveats stated; reproducible artifact saved.
 
 ## 4C — Document Generation
@@ -47,7 +50,7 @@
 3. **Work from complete populations,** not samples, for the final result. Samples are for method development only, and outputs are labeled SAMPLE until the full run.
 4. **Every row lands in exactly one bucket:** matched / source-only / target-only / matched-with-variance. Buckets must sum to totals — publish the sum check.
 5. **Variance rows get dispositions,** not deletions: each carries explanation, owner, or `unresolved`. Unresolved count is a headline metric, never a footnote.
-6. **Deliverable:** the mapping/recon workbook (stable IDs per row, consistent column dictionary), summary tab with bucket totals + sum check, method note (keys, tolerances, environments, run date, source snapshots used). The workbook is row-level data by design — file it per AGENT.md §4.6 to the human-designated location and record the location in the closeout.
+6. **Deliverable:** the mapping/recon workbook (stable IDs per row, consistent column dictionary), summary tab with bucket totals + sum check, method note (keys, tolerances, environments, run date, source snapshots used). The workbook is row-level data by design — file it per Evidence Minimization above to the human-designated location and record the location in the closeout.
 7. **Definition of done:** buckets sum; every variance dispositioned or explicitly unresolved with owner; method note complete and matching the approved version; workbook filed and referenced in closeout.
 
 ---
