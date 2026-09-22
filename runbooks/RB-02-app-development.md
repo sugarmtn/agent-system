@@ -1,6 +1,6 @@
 # RB-02 — Building Apps
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-08
+**Owner:** Alan Strutz | **Last updated:** 2026-09-22
 **Applies to:** New applications and new user-facing features: web apps, internal tools, custom-coded and low-code platform apps, dashboards with interactivity.
 **Load with:** AGENT.md + the project's SPEC/BUILD docs. New apps always pass the Change Gate (SPEC → execution plan → implement → BUILD certification) — no exceptions.
 
@@ -93,4 +93,3 @@ Apps: previous deployed version restored via the platform's version/deployment h
 |---|---|
 | Platform lacks a capability the spec assumes | Stop; document the gap with doc reference; spec revision |
 | Design/UX decision with user-facing consequence and no guidance | Ask with 2–3 options described concretely (layout, behavior, and the tradeoff of each); build nothing until one is chosen. A rendered mock is produced only if the human asks for one to decide |
-| Two failed attempts on same platform error | AGENT.md §7 |
