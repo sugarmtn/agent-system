@@ -56,14 +56,24 @@ Execute the pipeline for the new object with a limiting filter
 
 #### Step 5: Full load + reconciliation
 ```
-Run the full initial load. Then reconcile:
+Run the full initial load. Then reconcile at the tier the change requires:
+
+Full tier (change touches load logic, the dedupe/watermark key, or the
+target schema — anything that could newly introduce duplicates, wrong
+types, or dropped rows):
 - COUNT(*) target vs. source count (same filter window)
 - Spot-check 3+ rows field-by-field against source
 - For incremental: run twice consecutively; second run must produce
   0 duplicates (idempotency proof).
+
+Light tier (change touches neither — schedule change, enabled-flag
+flip, alerting-only change):
+- COUNT(*) target vs. source count, confirming the existing load is
+  still intact. Nothing here could have changed duplication or type
+  behavior, so the spot-check and double-run don't need re-proving.
 ```
-**Expected result:** Counts match exactly or the variance is explained in writing (e.g., source-side soft deletes). Double-run produces no dupes. **Evidence is recorded minimized per Evidence Minimization above:** which keys were spot-checked and the result — never the field values themselves.
-**If it fails:** Do not "close enough" a count mismatch. Diff keys between source and target to locate the missing/extra population; fix root cause.
+**Expected result:** Full tier: counts match exactly or the variance is explained in writing (e.g., source-side soft deletes), and the double-run produces no dupes. Light tier: counts match exactly. Either tier: state which tier applied and why. **Evidence is recorded minimized per Evidence Minimization above:** which keys were spot-checked and the result — never the field values themselves.
+**If it fails:** Do not "close enough" a count mismatch. Diff keys between source and target to locate the missing/extra population; fix root cause. A light-tier mismatch means the change touched more than assumed — re-run at the full tier.
 
 #### Step 6: Schedule, alert, document
 ```
@@ -75,7 +85,7 @@ inventory doc with the new mapping row.
 **If it fails:** An unmonitored pipeline is incomplete work — list alerting as an Open Item in the closeout, never omit it silently.
 
 ### Verification (definition of done)
-- [ ] Reconciliation results (counts; keys spot-checked + result, per Evidence Minimization above) and idempotency double-run evidence recorded in the closeout and commit/PR message — never in SPEC/BUILD
+- [ ] Reconciliation results for the tier that applied (Step 5) — counts, and for full tier also keys spot-checked + idempotency double-run evidence, per Evidence Minimization above — recorded in the closeout and commit/PR message — never in SPEC/BUILD
 - [ ] BUILD doc updated per AGENT.md §3a: control-table row, target DDL, and watermark config reflected as current design
 - [ ] Rebuild trigger satisfied (SPEC-AND-BUILD §3): for a new or changed source, the updated BUILD steps were executed against a clean dev target and reconciled — not just the live change verified
 - [ ] Control-table row(s) present and enabled per spec
