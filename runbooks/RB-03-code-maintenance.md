@@ -1,11 +1,14 @@
 # RB-03 — Maintaining & Updating Code
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-08
+**Owner:** Alan Strutz | **Last updated:** 2026-09-22
 **Applies to:** Bug fixes, enhancements, refactors, dependency updates, config changes to existing code/pipelines/apps.
 **Load with:** AGENT.md. Change Gate applies per AGENT.md §3 — including its precedence rule: single bug fixes with a reproducible case are exempt from approval **unless the change touches production data or configuration**, in which case the gate applies (active production incidents: AGENT.md §3b break-glass). Declare the exemption or the gate at the start. §3a still applies either way: if the fix alters what a rebuild should produce, update BUILD in the same session.
 
 ### Purpose
 Ensure changes to existing systems are minimal, reversible, verified against a reproduced baseline, and never mix concerns.
+
+### Evidence Minimization
+Business data appears in commits, PR messages, closeouts, and committed docs only as keys, counts, aggregates, hashes, or masked values. Raw row contents may be displayed in-session for verification, but the durable record states which keys were checked and the result ("3 rows spot-checked field-by-field: match") — never the field values themselves. Deliverables whose *purpose* is row-level data (reconciliation workbooks, mapping files) are exempt in content but are filed to the location the human designates — not committed to code or agent-system repos by default — and the closeout records that location. A project's agent-context file (`CLAUDE.md` in Claude Code; the project instructions in a hosted project) may relax this rule explicitly for genuinely non-sensitive data.
 
 ### Prerequisites
 - [ ] The change target identified precisely: repo/branch, or pipeline/object name + environment.
@@ -56,7 +59,7 @@ are found, list them in the closeout as follow-ups.
    external-system-dependent), declare that in the closeout as an open
    item — untestable fixes are a standing risk, same as unversioned assets.
 ```
-**Expected result:** All of the above recorded with evidence (minimized per AGENT.md §4.6 where data is involved).
+**Expected result:** All of the above recorded with evidence (minimized per Evidence Minimization above where data is involved).
 **If it fails:** Two attempts, then escalate. If the fix passes but the regression check changes, the fix is wrong even if the bug is gone.
 
 #### Step 5: Commit with traceable history

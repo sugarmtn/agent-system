@@ -1,11 +1,14 @@
 # RB-01 — Data Ingestion
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-08
+**Owner:** Alan Strutz | **Last updated:** 2026-09-22
 **Applies to:** New ingestion pipelines, new sources/endpoints/tables added to existing pipelines, changes to ingestion logic, control-table entries.
 **Load with:** AGENT.md (always) + the project's SPEC/BUILD docs (approved diff for changes; new docs for new pipelines).
 
 ### Purpose
 Standardize how an AI session builds or modifies data ingestion so that every pipeline is metadata-driven, idempotent, verified by counts, and documented — regardless of source (API, database, file drop).
+
+### Evidence Minimization
+Business data appears in commits, PR messages, closeouts, and committed docs only as keys, counts, aggregates, hashes, or masked values. Raw row contents may be displayed in-session for verification, but the durable record states which keys were checked and the result ("3 rows spot-checked field-by-field: match") — never the field values themselves. Deliverables whose *purpose* is row-level data (reconciliation workbooks, mapping files) are exempt in content but are filed to the location the human designates — not committed to code or agent-system repos by default — and the closeout records that location. A project's agent-context file (`CLAUDE.md` in Claude Code; the project instructions in a hosted project) may relax this rule explicitly for genuinely non-sensitive data.
 
 ### Prerequisites
 - [ ] Approved spec naming: source system + object(s), target (server/database/schema/table), load pattern (full/incremental), schedule, environment.
@@ -59,7 +62,7 @@ Run the full initial load. Then reconcile:
 - For incremental: run twice consecutively; second run must produce
   0 duplicates (idempotency proof).
 ```
-**Expected result:** Counts match exactly or the variance is explained in writing (e.g., source-side soft deletes). Double-run produces no dupes. **Evidence is recorded minimized per AGENT.md §4.6:** which keys were spot-checked and the result — never the field values themselves.
+**Expected result:** Counts match exactly or the variance is explained in writing (e.g., source-side soft deletes). Double-run produces no dupes. **Evidence is recorded minimized per Evidence Minimization above:** which keys were spot-checked and the result — never the field values themselves.
 **If it fails:** Do not "close enough" a count mismatch. Diff keys between source and target to locate the missing/extra population; fix root cause.
 
 #### Step 6: Schedule, alert, document
@@ -72,7 +75,7 @@ inventory doc with the new mapping row.
 **If it fails:** An unmonitored pipeline is incomplete work — list alerting as an Open Item in the closeout, never omit it silently.
 
 ### Verification (definition of done)
-- [ ] Reconciliation results (counts; keys spot-checked + result, per AGENT.md §4.6) and idempotency double-run evidence recorded in the closeout and commit/PR message — never in SPEC/BUILD
+- [ ] Reconciliation results (counts; keys spot-checked + result, per Evidence Minimization above) and idempotency double-run evidence recorded in the closeout and commit/PR message — never in SPEC/BUILD
 - [ ] BUILD doc updated per AGENT.md §3a: control-table row, target DDL, and watermark config reflected as current design
 - [ ] Rebuild trigger satisfied (SPEC-AND-BUILD §3): for a new or changed source, the updated BUILD steps were executed against a clean dev target and reconciled — not just the live change verified
 - [ ] Control-table row(s) present and enabled per spec
