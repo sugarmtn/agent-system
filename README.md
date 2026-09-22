@@ -32,7 +32,7 @@ runbooks/
 - **Synced checkouts** record the synced SHA in the working repo's `CLAUDE.md`.
 - **claude.ai Projects** record the SHA in the project instructions at each refresh.
 
-Every session records the SHA (or tag) in force in its closeout (`Agent-system:` line, AGENT.md §5.2) — which ruleset governed a session must always be reconstructable. **Advancing a repo's pin is a deliberate RB-03 change** (smallest change, one concern): adoption of new rules is chosen, never passive.
+Every session records the SHA (or tag) in force in its closeout (`Governed by:` line, AGENT.md §5.2) — which ruleset governed a session must always be reconstructable. **Advancing a repo's pin is a deliberate RB-03 change** (smallest change, one concern): adoption of new rules is chosen, never passive.
 
 Consumption:
 - **Claude Code (primary):** each working repo's `CLAUDE.md` imports AGENT.md from this repo (pinned submodule, or synced checkout with recorded SHA) and adds only repo-specific context. Runbooks/templates are referenced by path and read on demand. Never copy content into working repos — copies drift.

@@ -44,7 +44,7 @@ Plus one sentence: advancing this pin is a deliberate RB-03 change, never
 passive — `git -C agent-system fetch && git -C agent-system checkout <new-sha>`,
 committed on its own.
 ```
-**Expected result:** The SHA in `CLAUDE.md` matches `git submodule status` exactly. Sessions have the value they must record in the closeout `Agent-system:` line (AGENT.md §5.2) without inspecting git.
+**Expected result:** The SHA in `CLAUDE.md` matches `git submodule status` exactly. Sessions have the value they must record in the closeout `Governed by:` line (AGENT.md §5.2) without inspecting git.
 **If it fails:** A mismatch between the recorded SHA and the gitlink means one was advanced without the other. Correct both to the intended pin in the same change and state which was wrong.
 
 #### Step 4: Declare the adoption boundary
