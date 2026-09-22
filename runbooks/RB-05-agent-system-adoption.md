@@ -1,6 +1,6 @@
 # RB-05 — Agent-System Adoption
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-16
+**Owner:** Alan Strutz | **Last updated:** 2026-09-22
 **Applies to:** Bringing a repo under agent-system governance for the first time — submodule pin, `CLAUDE.md` wiring, and reconciling existing docs to the §6 naming scheme. **Not** advancing an existing pin (that is an RB-03 change, README "Home & deployment"), and not repos that host no system a SPEC/BUILD would describe.
 **Load with:** AGENT.md + the agent-system README ("Home & deployment", "Project layering"). Change Gate per AGENT.md §3 — adoption is normally exempt (repo configuration, no production system touched); declare the exemption at the start.
 
@@ -99,4 +99,3 @@ Adoption is reversible up to the commit: `git submodule deinit -f agent-system`,
 | Repo hosts no system a SPEC/BUILD would describe (reference or context repo) | Not an adoption target — say so and stop; do not adopt "for consistency" |
 | An existing `agent-system/` directory is a copy, not a submodule | Stop; removal is destructive (§4.2) and the copy may have drifted — hand to the human with the diff against the intended pin |
 | Repo-level instruction file contradicts AGENT.md | Present the conflict as a `NEEDS YOU:` line (§8); never resolve it by silently subordinating one to the other |
-| Two failed attempts on the same submodule/auth error | AGENT.md §7 escalation with the exact error |

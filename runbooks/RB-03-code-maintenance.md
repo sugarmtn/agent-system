@@ -1,8 +1,8 @@
 # RB-03 — Maintaining & Updating Code
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-08
+**Owner:** Alan Strutz | **Last updated:** 2026-09-22
 **Applies to:** Bug fixes, enhancements, refactors, dependency updates, config changes to existing code/pipelines/apps.
-**Load with:** AGENT.md. Change Gate applies per AGENT.md §3 — including its precedence rule: single bug fixes with a reproducible case are exempt from approval **unless the change touches production data or configuration**, in which case the gate applies (active production incidents: AGENT.md §3b break-glass). Declare the exemption or the gate at the start. §3a still applies either way: if the fix alters what a rebuild should produce, update BUILD in the same session.
+**Load with:** AGENT.md. Change Gate: AGENT.md §3 applies (its exemption/trigger precedence rule decides gate-or-exempt here) — declare which at the start. §3a applies regardless: if the fix alters what a rebuild should produce, update BUILD in the same session.
 
 ### Purpose
 Ensure changes to existing systems are minimal, reversible, verified against a reproduced baseline, and never mix concerns.
@@ -81,9 +81,7 @@ from Step 4 after. Pin exact versions in the manifest/lockfile.
 **If it fails:** Revert that bump only; record the incompatibility.
 
 ### Verification (definition of done)
-- [ ] Original failing case passes / new behavior demonstrated
-- [ ] Regression check recorded
-- [ ] Regression test committed with the fix, or its absence declared in the closeout with reason
+- [ ] Step 4's checks passed: failing case now passes, regression checked, regression test committed or its absence declared
 - [ ] Diff contains only the intended change
 - [ ] Committed/exported with baseline preserved
 - [ ] Downstream consumers from Prerequisites checked or explicitly deferred with reason
@@ -106,4 +104,3 @@ Git: revert commit (never force-push shared branches without confirmation — AG
 |---|---|
 | Root cause sits in code/config the session can't access | Hand off with the trace evidence |
 | Fix requires prod data correction | Change Gate + explicit human sign-off on the correction statement |
-| Two failed fix attempts | AGENT.md §7 |

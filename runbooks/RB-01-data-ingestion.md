@@ -1,6 +1,6 @@
 # RB-01 — Data Ingestion
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-08
+**Owner:** Alan Strutz | **Last updated:** 2026-09-22
 **Applies to:** New ingestion pipelines, new sources/endpoints/tables added to existing pipelines, changes to ingestion logic, control-table entries.
 **Load with:** AGENT.md (always) + the project's SPEC/BUILD docs (approved diff for changes; new docs for new pipelines).
 
@@ -97,4 +97,3 @@ Disable the control-table row (enabled flag) and/or the trigger; drop or truncat
 |---|---|
 | Auth requires tenant-admin consent or new registration | Hand to human with exact registration/scope needed |
 | Source data quality contradicts spec assumptions | Stop; update spec Open Questions; await ruling |
-| Two failed fix attempts on the same error | AGENT.md §7 escalation with full evidence |

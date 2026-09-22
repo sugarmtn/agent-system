@@ -11,6 +11,7 @@
 3. Troubleshooting rows come from real incidents only — no speculative entries.
 4. Project runbooks contain only steps that differ from the RB they follow. Never copy parent steps.
 5. Update in place; refresh Last updated; git history is the change record (AGENT.md §6).
+6. Escalation table lists only runbook-specific triggers — AGENT.md §7's global triggers apply to every runbook already and are never restated here.
 -->
 
 ### Purpose
@@ -52,7 +53,7 @@
 <How to undo. If a step cannot be undone, say so explicitly.>
 
 ### Escalation
+<Global triggers (two failed fix attempts, missing credentials/access, spec-contradicting results, scope drift) are already covered by AGENT.md §7 for every runbook — do not restate them here. List only triggers specific to this runbook's domain.>
 | Situation | Action |
 |---|---|
-| Two failed fix attempts on the same error | AGENT.md §7 |
 | | |
