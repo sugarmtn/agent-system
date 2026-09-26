@@ -78,10 +78,13 @@ flip, alerting-only change):
 #### Step 6: Schedule, alert, document
 ```
 Attach to schedule/trigger per spec. Confirm failure alerting routes to a
-monitored channel. Update the endpoint/table reconciliation workbook or
-inventory doc with the new mapping row.
+monitored channel. Update the reference doc the ingestion BUILD module cites
+(docs/reference/<slug>.md — SPEC-AND-BUILD §1c) with the new endpoint/table
+mapping row. If no reference doc exists yet for this module, create one
+from templates/REF-TEMPLATE.md and declare it in the module's BUILD entry —
+don't inline the inventory into BUILD itself.
 ```
-**Expected result:** Trigger enabled in the specified environment only; inventory updated.
+**Expected result:** Trigger enabled in the specified environment only; the module's reference doc updated, not BUILD itself.
 **If it fails:** An unmonitored pipeline is incomplete work — list alerting as an Open Item in the closeout, never omit it silently.
 
 ### Verification (definition of done)
@@ -90,7 +93,7 @@ inventory doc with the new mapping row.
 - [ ] Rebuild trigger satisfied (SPEC-AND-BUILD §3): for a new or changed source, the updated BUILD steps were executed against a clean dev target and reconciled — not just the live change verified
 - [ ] Control-table row(s) present and enabled per spec
 - [ ] Secrets referenced by name only anywhere the session wrote
-- [ ] Inventory/mapping doc updated
+- [ ] The ingestion module's reference doc updated with the new mapping row (SPEC-AND-BUILD §1c)
 - [ ] Closeout block produced (AGENT.md §5)
 
 ### Troubleshooting

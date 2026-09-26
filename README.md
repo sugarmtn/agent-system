@@ -13,6 +13,7 @@ templates/
   PROPOSAL-TEMPLATE.md        ← optional pre-stage; never auto-loaded (AGENT.md §1.1)
   SPEC-TEMPLATE.md
   BUILD-TEMPLATE.md
+  REF-TEMPLATE.md             ← module-scoped facts, cited by one BUILD module by default (SPEC-AND-BUILD §1c)
   RUNBOOK-TEMPLATE.md
 runbooks/
   RB-01-data-ingestion.md     ← loaded per task routing (AGENT.md §2)
@@ -58,7 +59,7 @@ A project gets its own runbook **only** for a recurring procedure with genuinely
 | What the system is and why (current requirements) | The project's living SPEC (`docs/SPEC.md`) |
 | Steps to construct the system from scratch | The project's living BUILD doc (`docs/BUILD.md`, modularized when complex) — updated in place on every change so a rebuild always includes it |
 | Operate-time procedures that don't change the system definition (backfill, watermark reset, failure recovery) | A project runbook (`Follows RB-<nn>`, delta only) |
-| Facts about what exists (table inventories, mappings, transformation logic) | `docs/reference/`, cited by SPEC/BUILD and runbooks |
+| Facts about what exists (table inventories, mappings, transformation logic, data contracts) | `docs/reference/<slug>.md`, one doc per citing BUILD module by default — sharing across modules needs an approved SPEC Design Rationale exception (SPEC-AND-BUILD §1c) |
 
 **Boundary rule:** if executing the steps changes what a from-scratch rebuild should produce, they belong in BUILD (and go through the Change Gate). If they restore or operate the system as already defined, they belong in a project runbook. Project runbooks are earned from real recurring operations, never written speculatively.
 

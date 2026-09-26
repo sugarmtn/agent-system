@@ -24,11 +24,27 @@ Steps reference parameters as `{param}`. No environment values appear in steps.
 
 > This table is the **environment catalog** — it names all environments and their values. It does not select a target. The target environment is chosen per session (AGENT.md §4.1): human statement, or the approved execution plan's stated target; otherwise the session must ask.
 
+## Reference docs *(delete for a modularized build — declare per-module in the Module Index instead)*
+| Reference doc | Holds |
+|---|---|
+| docs/reference/<slug>.md | <inventory / mapping / data contract / transformation logic — facts only, no procedure> |
+
+<Facts about what exists (table inventories, mappings, transformation logic, data
+contracts) belong in a cited reference doc, not inlined here as a table
+(SPEC-AND-BUILD §1c). A session working this build loads exactly the reference docs
+listed here — nothing else in docs/reference/.>
+
 ## Module Index *(delete section for single-file builds)*
-| Order | Module | Depends on | Realizes |
-|---|---|---|---|
-| 1 | modules/BUILD-<component>.md | — | R1–R4 |
-| 2 | modules/BUILD-<component>.md | 1 | R5–R8 |
+| Order | Module | Depends on | Reference doc | Realizes |
+|---|---|---|---|---|
+| 1 | modules/BUILD-<component>.md | — | docs/reference/<component>.md | R1–R4 |
+| 2 | modules/BUILD-<component>.md | 1 | — | R5–R8 |
+
+<Reference doc is the one file that module's facts live in (SPEC-AND-BUILD §1c.3) —
+one doc, one module, by default. More than one module citing the same reference doc
+requires a SPEC Design Rationale entry recording the approved exception; without one,
+split the doc along module lines instead. A session loads a module plus only the
+reference doc(s) its own row names — never the whole docs/reference/ directory.>
 
 ## Prerequisites
 - [ ] <access/permission, by name>

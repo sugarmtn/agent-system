@@ -20,8 +20,12 @@ Standardize how an AI session builds an app: contract-first (data and API shapes
 For every screen/feature: write the read queries/API calls and the
 write payloads it needs, with field names and types, before any UI code.
 Validate each against the real backend (execute the query / call the API once).
+Record the field-by-field detail in a reference doc cited by the implementing
+BUILD module (docs/reference/<slug>.md, templates/REF-TEMPLATE.md —
+SPEC-AND-BUILD §1c) — BUILD itself states which data interactions exist and
+points at the reference doc, it does not inline the field tables.
 ```
-**Expected result:** A data-contract section in the BUILD doc listing every data interaction, each proven to return/accept real data.
+**Expected result:** A data contract in the module's reference doc listing every data interaction, each proven to return/accept real data; BUILD's own text is a pointer, not the field-by-field detail.
 **If it fails (backend gap found): STOP on that feature — the gap is a separate task. Do not load RB-01.** Log an Open Item — `route to RB-01: <object/endpoint needed>, owner: <human>` — pause only the blocked feature, and continue on features whose contracts validated. Close out early only if every feature is blocked. Finding the gap this early is cheap; the ingestion work gets its own session and gate.
 
 #### Step 2: Walking skeleton
@@ -61,10 +65,12 @@ action is either idempotent or guarded against double-submit.
 
 #### Step 6: Handoff package
 ```
-Confirm the BUILD doc passes the rebuild standard: a fresh session could
-construct and deploy this app from docs/SPEC.md + docs/BUILD.md alone
-(deployment path, manifests, config/secrets by name, platform gotchas as
-design notes). Walk one named user (from the SPEC) through the primary workflow.
+Confirm the BUILD doc (plus the reference docs its modules cite) passes the
+rebuild standard: a fresh session could construct and deploy this app from
+docs/SPEC.md + docs/BUILD.md + docs/reference/ alone (deployment path,
+manifests, config/secrets by name, platform gotchas as design notes, data
+contracts in their reference docs). Walk one named user (from the SPEC)
+through the primary workflow.
 ```
 **Expected result:** A person (or session) that is not you can rebuild, deploy, and use it from the project docs alone.
 **If it fails (user walkthrough surfaces mismatch):** Mismatch vs. spec = defect, fix. New desire beyond SPEC = Change Gate (SPEC diff, approval), not silent scope add.
@@ -73,7 +79,7 @@ design notes). Walk one named user (from the SPEC) through the primary workflow.
 - [ ] Every SPEC requirement has recorded pass evidence (closeout/commits)
 - [ ] Failure/empty states verified per screen
 - [ ] Deployed via the real deployment path, not only local
-- [ ] BUILD doc meets the rebuild standard and was sanity-checked once from scratch
+- [ ] BUILD doc (and any reference docs its modules cite) meets the rebuild standard and was sanity-checked once from scratch
 - [ ] No secrets in code, config committed, or chat
 - [ ] Closeout block produced
 

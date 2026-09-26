@@ -60,6 +60,10 @@ explicitly any folder that predates adoption and is NOT yet governed.
 Within the adopted scope only:
 - SPEC/BUILD docs at a folder root → docs/SPEC.md, docs/BUILD.md
 - README trimmed to entry-point scope (identity + links), per SPEC-AND-BUILD §4
+- Existing inventories/mappings/data-contract docs → docs/reference/<slug>.md,
+  one doc per citing BUILD module by default (SPEC-AND-BUILD §1c); a doc that
+  genuinely serves more than one module is flagged for a SPEC Design Rationale
+  exception, not silently kept shared
 - Any doc outside the scheme → flag it; do not silently rename or absorb it
 ```
 **Expected result:** Adopted folders match SPEC-AND-BUILD §4. Out-of-scope folders are untouched and declared per Step 4.

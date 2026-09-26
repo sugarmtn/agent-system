@@ -10,9 +10,10 @@
 | Build doc | docs/BUILD.md (drafted after approval; certified at closeout) |
 
 <The sections below are required. Domain sections may be added after them — but content
-with a designated home goes there: construction steps in BUILD, inventories, mappings and
-transformation logic in docs/reference/. SPEC states what the system is and why, never how
-it is built.>
+with a designated home goes there: construction steps in BUILD; inventories, mappings,
+transformation logic and data contracts in a module-scoped `docs/reference/<slug>.md`
+(templates/REF-TEMPLATE.md, one doc per citing BUILD module by default — SPEC-AND-BUILD
+§1c). SPEC states what the system is and why, never how it is built.>
 
 ## Problem / Objective
 <2–4 sentences: what this system does and why it exists. Present tense, current state — as-built, no history. Business language, no implementation detail.>

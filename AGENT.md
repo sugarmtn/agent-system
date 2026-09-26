@@ -8,7 +8,7 @@ These instructions govern every AI session and override default model behavior. 
 
 ## 1. Operating Mode
 
-1. **Minimal context.** Load only what the task needs — never the full runbook library, full schemas, or a whole codebase "for reference." Read targeted sections; expand only when a step requires more. **Proposals (`docs/proposals/`) are never part of a project's docs** — they're working notes that may contradict each other, and a `Draft` isn't a statement about the system. Load one only when the human names it.
+1. **Minimal context.** Load only what the task needs — never the full runbook library, full schemas, or a whole codebase "for reference." Read targeted sections; expand only when a step requires more. When a task loads one BUILD module, load only the reference doc(s) that module declares (its Module Index row, or its single-file build's Reference docs section — SPEC-AND-BUILD §1c.6) — never the whole `docs/reference/` directory "for completeness." **Proposals (`docs/proposals/`) are never part of a project's docs** — they're working notes that may contradict each other, and a `Draft` isn't a statement about the system. Load one only when the human names it.
 2. **No silent assumptions.** If anything the task depends on is missing, ambiguous, or unclear, stop and ask — never guess, whatever it is: connection strings, environment names, schema names, business rules, intent, or anything else left unclear. Show the options you considered and your recommended default.
 3. **Declared assumptions only.** When an assumption is low-risk and asking would be overkill, proceed — but log it in an `## Assumptions` block. An undeclared assumption is a defect.
 4. **Leave nothing open.** Every deliverable states what was done, what was verified, what's left, and who or what is blocking it. "Should work" isn't done.
@@ -31,7 +31,7 @@ These instructions govern every AI session and override default model behavior. 
 15. Artifacts (SPEC/BUILD docs, runbooks, reference docs) are files, not chat prose — naming per SPEC-AND-BUILD §4. Execution plans are the exception: chat-only, never committed (SPEC-AND-BUILD §2, stage 2).
 16. Match answer size to question size. No summaries of summaries. No restating the prompt.
 17. **Plain language.** Explain yourself in plain English. Avoid jargon or technical terms where a plain explanation says the same thing.
-18. **Confirm before acting on new feedback.** New feedback, requests, or answers from the human don't by themselves authorize acting on them — even when they read as a go-ahead. Work them into the current proposal, present the updated plan or draft, and wait for explicit confirmation before making any edit, commit, or other action. Applies to every kind of document or action, not just this one.
+18. **Confirm before acting on new feedback — including your own.** Neither the human's reply nor your own recommendation authorizes the next step. Work it in, present the result, and stop — no edit, commit, plan-mode entry, or follow-up question until the human explicitly agrees. Applies to every document or action.
 19. **Avoid mistakes.** Take care not to make them — this is the point of every rule above, stated plainly.
 
 ## 2. Task Routing
@@ -84,7 +84,7 @@ Approved: <artifact> by <name>, <date>, <in-session | PR>. Target: <environment(
 
 Work with no commit records the same line in the closeout `Approvals:` field instead — that becomes the durable record.
 
-**§3a — As-built invariant.** Any session that changes a system must update its SPEC/BUILD docs in the same session, so a fresh session with only those docs could rebuild the change — written as if it was always designed that way. No doc update means incomplete work. A session interrupted mid-change leaves the WIP marker (SPEC-AND-BUILD §2, stage 3) in place; the next session reconciles before doing anything new.
+**§3a — As-built invariant.** Any session that changes a system must update its SPEC/BUILD docs — and any reference doc a changed BUILD module cites (SPEC-AND-BUILD §1c) — in the same session, so a fresh session with only those docs could rebuild the change — written as if it was always designed that way. No doc update means incomplete work. A session interrupted mid-change leaves the WIP marker (SPEC-AND-BUILD §2, stage 3) in place; the next session reconciles before doing anything new.
 
 **§3b — Break-glass (active production failures only).** Only for a production failure causing ongoing damage or data loss — never for urgency, deadlines, or feature pressure. Declare `Break-glass: <incident>`, then:
 
@@ -124,7 +124,7 @@ Evidence minimization (masking business data in durable records) lives in full i
    Add only the lines below that apply — never print one just to say "none," "n/a," or "exempt":
    ```
    Environment: <target(s) touched, and the §4.1 resolution path that selected them>
-   Docs: <SPEC/BUILD sections updated per §3a>
+   Docs: <SPEC/BUILD sections updated per §3a, including any reference doc updated alongside its citing module>
    Verified: <what was tested and the observed result — evidence minimized per the loaded runbook's Evidence Minimization rule, where applicable>
    Rebuild: <required — ran, result | not required — approver, reason>
    Approvals: <ledger line per §3, or "see commit <SHA>">

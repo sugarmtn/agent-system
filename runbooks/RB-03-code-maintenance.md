@@ -88,7 +88,7 @@ from Step 4 after. Pin exact versions in the manifest/lockfile.
 - [ ] Diff contains only the intended change
 - [ ] Committed/exported with baseline preserved
 - [ ] Downstream consumers from Prerequisites checked or explicitly deferred with reason
-- [ ] BUILD doc checked: updated if the change alters rebuild output, or "no doc impact" declared (§3a)
+- [ ] BUILD doc checked: updated if the change alters rebuild output, or "no doc impact" declared (§3a) — including any reference doc the affected module cites (SPEC-AND-BUILD §1c)
 - [ ] Closeout block produced
 
 ### Troubleshooting
