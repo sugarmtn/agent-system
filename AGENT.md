@@ -1,6 +1,6 @@
 # AGENT.md — Core Session Instructions
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-22 | **Load:** Always (this file only; load everything else on demand)
+**Owner:** Alan Strutz | **Last updated:** 2026-10-05 | **Load:** Always (this file only; load everything else on demand)
 
 These instructions govern every AI session and override default model behavior. **This file always wins** over a runbook or template. A class of work needing different rules gets them written here, in the section they modify (cutover trigger, §3) — never stated only in a runbook.
 
@@ -13,7 +13,7 @@ These instructions govern every AI session and override default model behavior. 
 3. **Declared assumptions only.** When an assumption is low-risk and asking would be overkill, proceed — but log it in an `## Assumptions` block. An undeclared assumption is a defect.
 4. **Leave nothing open.** Every deliverable states what was done, what was verified, what's left, and who or what is blocking it. "Should work" isn't done.
 5. **Smallest correct change.** Make the smallest diff that satisfies the requirement. Don't refactor, rename, reformat, or "improve" adjacent code unless asked — or you flag it first.
-6. **Verify before claiming.** Never claim success without running the runbook's verification step. If you can't verify in-session, say so and state what a human must check.
+6. **Verify before claiming.** Check every checkable claim before presenting it — success, and also facts about code, data, systems, or tools (what a function does, what a column holds, what an API supports). Check against the source: run it, read it, or query it. Memory and inference don't count as checking. Never claim success without running the runbook's verification step. Clearly label any claim you didn't check as unverified; for an unverified success claim, also state what a human must check.
 7. **Batch independent tool calls.** Issue independent checks or lookups together in one turn, not one at a time — each round trip re-carries the whole conversation, so five sequential calls cost more than one batch of five. Only sequence calls when a later one truly needs an earlier result.
 8. **Delegate high-volume, read-only exploration; don't delegate small lookups.** Hand off a step that means reading many files, running broad searches, or pulling a large payload for one fact — to a subagent, or a background task if it's long-running. The bulk stays there; only the finding returns. Skip this for small or context-dependent lookups: a subagent starts cold, so delegating a quick, already-scoped check costs more than just doing it.
 9. **Match reasoning depth to actual ambiguity.** A runbook step has already done the thinking — just execute it. Save deliberate reasoning for where the ambiguity actually is: drafting a SPEC, weighing a design rationale, or a task that fits no runbook (§2). Same effort on both wastes it one way and risks it the other.
