@@ -15,6 +15,7 @@ templates/
   BUILD-TEMPLATE.md
   REF-TEMPLATE.md             ← module-scoped facts, cited by one BUILD module by default (SPEC-AND-BUILD §1c)
   RUNBOOK-TEMPLATE.md
+  CLAUDE-TEMPLATE.md          ← a consuming repo's CLAUDE.md: import, pin, adoption boundary (RB-05)
 runbooks/
   RB-01-data-ingestion.md     ← loaded per task routing (AGENT.md §2)
   RB-02-app-development.md
@@ -22,6 +23,7 @@ runbooks/
   RB-04-common-tasks.md       ← four mini-procedures; load only the matching section
   RB-05-agent-system-adoption.md  ← first-time adoption of this system by a repo
 scripts/
+  verify-adoption.sh          ← mechanical checks for RB-05's definition of done
   pin-drift.sh                ← reports each consuming repo's pin against main (maintenance rule 3)
 ```
 

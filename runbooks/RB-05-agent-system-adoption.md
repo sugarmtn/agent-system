@@ -1,6 +1,6 @@
 # RB-05 — Agent-System Adoption
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-22
+**Owner:** Alan Strutz | **Last updated:** 2026-10-23
 **Applies to:** Bringing a repo under agent-system governance for the first time — submodule pin, `CLAUDE.md` wiring, and reconciling existing docs to the SPEC-AND-BUILD §4 naming scheme. **Not** advancing an existing pin (that is an RB-03 change, README "Home & deployment"), and not repos that host no system a SPEC/BUILD would describe.
 **Load with:** AGENT.md + the agent-system README ("Home & deployment", "Project layering"). Change Gate per AGENT.md §3 — adoption is normally exempt (repo configuration, no production system touched); declare the exemption at the start.
 
@@ -8,12 +8,30 @@
 Standardize first-time adoption so every governed repo loads AGENT.md the same way, pins deliberately, and states plainly which of its contents are governed and which are not. Repos that adopted before this runbook existed diverged on exactly these points — one wired the import so AGENT.md actually loads, two described it in prose and do not.
 
 ### Prerequisites
-- [ ] Repo identified, working tree clean, and the human has confirmed this repo is an adoption target.
+- [ ] Adoption target identified and confirmed by the human. If the target folder is not a git repo, Step 0 establishes one first — an untracked folder is the normal greenfield starting point, not a blocker.
+- [ ] If the target is already a git repo: working tree clean.
 - [ ] The repo hosts at least one system a SPEC/BUILD would describe. A reference or context repo that hosts none is **out of scope** — say so and stop (Escalation).
 - [ ] Adoption scope decided with the human: the whole repo, or named project folders only. Partial adoption is normal, not a defect.
 - [ ] The exact agent-system commit SHA to pin, chosen deliberately. `main` is not an answer (README: pinning is mandatory).
 
 ### Procedure
+
+#### Step 0: Establish the repo  (skip if the target folder is already a git repo)
+```
+git -C <target> rev-parse --show-toplevel    # names the repo root, or fails
+
+If it fails, no repo exists yet. Put the two options to the human and let
+them choose:
+
+A) Standalone repo for this project — `git init` in the project folder, one
+   repo per project, with its own remote. What Data Architecture, AzureSQL
+   and Data Management each did.
+B) Adopt the parent workspace folder — `git init` one level up, so every
+   sibling project folder comes with it.
+```
+**Trade-off, stated before they choose:** (A) makes the adoption boundary trivial — the repo is the project, every folder in it is governed. (B) pulls every sibling folder into one repo, so Step 4 must name each one as not-yet-governed and each later migration becomes its own task. Choose (B) only when the siblings are genuinely one system.
+**Expected result:** `git -C <target> rev-parse --show-toplevel` names the folder the human chose, so Step 1 has a repo to add the submodule to.
+**If it fails:** If neither the folder nor any parent is a git repo and the human has not chosen, stop — this is a `NEEDS YOU:` line (AGENT.md §1.14, flag the ask), not a default. Choosing silently sets the adoption boundary for every future session in that repo. If the folder turns out to sit inside an *unrelated* parent repo, say so and ask: `git submodule add` there would pin agent-system into a repo nobody intended to govern.
 
 #### Step 1: Add the submodule at the chosen SHA
 ```
@@ -26,6 +44,8 @@ git add .gitmodules agent-system
 
 #### Step 2: Wire `CLAUDE.md` so AGENT.md actually loads
 ```
+Start from templates/CLAUDE-TEMPLATE.md if the repo has no CLAUDE.md yet.
+
 Add as the first line of the governance section of the repo's CLAUDE.md:
 
 @agent-system/AGENT.md
@@ -35,22 +55,16 @@ Add as the first line of the governance section of the repo's CLAUDE.md:
 
 #### Step 3: Record the pin and its date in `CLAUDE.md`
 ```
-| | |
-|---|---|
-| Agent-system pin | `<full 40-char sha>` |
-| Pinned on | <date> |
-
-Plus one sentence: advancing this pin is a deliberate RB-03 change, never
-passive — `git -C agent-system fetch && git -C agent-system checkout <new-sha>`,
-committed on its own.
+Fill the pin table and pin-advance sentence from templates/CLAUDE-TEMPLATE.md
+with the full 40-char SHA from Step 1 and today's date.
 ```
 **Expected result:** The SHA in `CLAUDE.md` matches `git submodule status` exactly. Sessions have the value they must record in the closeout `Governed by:` line (AGENT.md §5.2) without inspecting git.
 **If it fails:** A mismatch between the recorded SHA and the gitlink means one was advanced without the other. Correct both to the intended pin in the same change and state which was wrong.
 
 #### Step 4: Declare the adoption boundary
 ```
-In CLAUDE.md, state repo scope as a folder → system table, and name
-explicitly any folder that predates adoption and is NOT yet governed.
+Fill the adoption boundary table from templates/CLAUDE-TEMPLATE.md: every
+top-level folder named as governed or as not-yet-governed.
 ```
 **Expected result:** A fresh session can tell from `CLAUDE.md` alone which parts of the repo follow agent-system conventions. Unmigrated folders are named as unmigrated, with their migration identified as a separate future task.
 **If it fails:** If the boundary cannot be stated because nobody knows which folders were built under which conventions, that is the finding — record it as an Open Item with a named owner rather than guessing. An unstated boundary lets a session assume conventions hold where they do not.
@@ -78,6 +92,8 @@ Confirm .claude/settings.local.json is gitignored (machine-specific paths).
 **If it fails:** If doc reconciliation from Step 5 is large enough to obscure the adoption itself, split it: adoption first, reconciliation second, per RB-03 discipline (one concern per change).
 
 ### Verification (definition of done)
+`scripts/verify-adoption.sh <repo-path>` runs the mechanical checks below and exits nonzero on failure. It deliberately does not cover the fresh-session load test or the §4 naming check — it reports those as not checked rather than passing them.
+
 - [ ] `git submodule status` reports the intended SHA, and it matches the SHA recorded in `CLAUDE.md`
 - [ ] A fresh session in the repo has AGENT.md loaded via the `@` import — verified by opening one, not by reading the file
 - [ ] `CLAUDE.md` records the pinned-on date and the RB-03 pin-advance rule
@@ -90,7 +106,8 @@ Confirm .claude/settings.local.json is gitignored (machine-specific paths).
 ### Troubleshooting
 | Symptom | Likely cause | Fix |
 |---|---|---|
-| | | |
+| Step 1 `git submodule add` exits `fatal: not a git repository (or any of the parent directories): .git` | The adoption target was never a git repo — the normal greenfield starting point, and its parent folder may be untracked too | Run Step 0 first and get the human's choice of standalone repo vs. parent workspace. Do not `git init` on a default — the choice sets the Step 4 boundary |
+| Sessions in an adopting repo behave as if AGENT.md were never loaded — **no error, no missing-file warning** | The repo was cloned without `--recurse-submodules`, so `agent-system/` is an empty directory and the `@agent-system/AGENT.md` import resolves to nothing. The session runs ungoverned and nothing reports it | `git submodule update --init` in the existing clone, or clone with `--recurse-submodules`. Confirm with `git submodule status`: a leading `-` on the line means uninitialized; once repaired the line has no prefix and `agent-system/AGENT.md` exists |
 
 *(Rows come from real incidents only — `templates/RUNBOOK-TEMPLATE.md`, authoring rule 3. Populate from adoption sessions as they happen, never speculatively.)*
 
