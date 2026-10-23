@@ -25,7 +25,7 @@ runbooks/
 
 ## Home & deployment
 
-**Canonical home: `sugarmtn/agent-system`** (public). All changes to these documents go through PRs, approved by a human approver (AGENT.md §3). No direct pushes to main.
+**Canonical home: `sugarmtn/agent-system`** (public — the unauthenticated HTTPS submodule clone in RB-05 Step 1 depends on this; making it private would break adoption on any machine without credentials). All changes to these documents go through PRs, approved by a human approver (AGENT.md §3). No direct pushes to main.
 
 **Version pinning is mandatory.** Working repos consume a *pinned commit* of this repo, never a floating head:
 
