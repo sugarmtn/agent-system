@@ -1,6 +1,6 @@
 # RB-05 — Agent-System Adoption
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-22
+**Owner:** Alan Strutz | **Last updated:** 2026-10-23
 **Applies to:** Bringing a repo under agent-system governance for the first time — submodule pin, `CLAUDE.md` wiring, and reconciling existing docs to the SPEC-AND-BUILD §4 naming scheme. **Not** advancing an existing pin (that is an RB-03 change, README "Home & deployment"), and not repos that host no system a SPEC/BUILD would describe.
 **Load with:** AGENT.md + the agent-system README ("Home & deployment", "Project layering"). Change Gate per AGENT.md §3 — adoption is normally exempt (repo configuration, no production system touched); declare the exemption at the start.
 
@@ -8,12 +8,30 @@
 Standardize first-time adoption so every governed repo loads AGENT.md the same way, pins deliberately, and states plainly which of its contents are governed and which are not. Repos that adopted before this runbook existed diverged on exactly these points — one wired the import so AGENT.md actually loads, two described it in prose and do not.
 
 ### Prerequisites
-- [ ] Repo identified, working tree clean, and the human has confirmed this repo is an adoption target.
+- [ ] Adoption target identified and confirmed by the human. If the target folder is not a git repo, Step 0 establishes one first — an untracked folder is the normal greenfield starting point, not a blocker.
+- [ ] If the target is already a git repo: working tree clean.
 - [ ] The repo hosts at least one system a SPEC/BUILD would describe. A reference or context repo that hosts none is **out of scope** — say so and stop (Escalation).
 - [ ] Adoption scope decided with the human: the whole repo, or named project folders only. Partial adoption is normal, not a defect.
 - [ ] The exact agent-system commit SHA to pin, chosen deliberately. `main` is not an answer (README: pinning is mandatory).
 
 ### Procedure
+
+#### Step 0: Establish the repo  (skip if the target folder is already a git repo)
+```
+git -C <target> rev-parse --show-toplevel    # names the repo root, or fails
+
+If it fails, no repo exists yet. Put the two options to the human and let
+them choose:
+
+A) Standalone repo for this project — `git init` in the project folder, one
+   repo per project, with its own remote. What Data Architecture, AzureSQL
+   and Data Management each did.
+B) Adopt the parent workspace folder — `git init` one level up, so every
+   sibling project folder comes with it.
+```
+**Trade-off, stated before they choose:** (A) makes the adoption boundary trivial — the repo is the project, every folder in it is governed. (B) pulls every sibling folder into one repo, so Step 4 must name each one as not-yet-governed and each later migration becomes its own task. Choose (B) only when the siblings are genuinely one system.
+**Expected result:** `git -C <target> rev-parse --show-toplevel` names the folder the human chose, so Step 1 has a repo to add the submodule to.
+**If it fails:** If neither the folder nor any parent is a git repo and the human has not chosen, stop — this is a `NEEDS YOU:` line (AGENT.md §1.14, flag the ask), not a default. Choosing silently sets the adoption boundary for every future session in that repo. If the folder turns out to sit inside an *unrelated* parent repo, say so and ask: `git submodule add` there would pin agent-system into a repo nobody intended to govern.
 
 #### Step 1: Add the submodule at the chosen SHA
 ```
