@@ -1,6 +1,6 @@
 # Agent Instruction System
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-22
+**Owner:** Alan Strutz | **Last updated:** 2026-10-23
 
 A modular instruction set for AI sessions built on progressive disclosure: a small core is always loaded; everything else loads only when the task requires it.
 
@@ -25,7 +25,7 @@ runbooks/
 
 ## Home & deployment
 
-**Canonical home: `sugarmtn/agent-system`** (private). All changes to these documents go through PRs, approved by a human approver (AGENT.md §3). No direct pushes to main.
+**Canonical home: `sugarmtn/agent-system`** (public). All changes to these documents go through PRs, approved by a human approver (AGENT.md §3). No direct pushes to main.
 
 **Version pinning is mandatory.** Working repos consume a *pinned commit* of this repo, never a floating head:
 
