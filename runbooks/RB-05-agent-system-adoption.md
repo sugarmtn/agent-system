@@ -16,6 +16,8 @@ Standardize first-time adoption so every governed repo loads AGENT.md the same w
 
 ### Procedure
 
+`scripts/new-repo.sh --target <path> --scope <text> --pin <sha>` performs the mechanical parts of Steps 0, 1 and 6 and refuses to do the rest: it never writes `CLAUDE.md` and never commits, because Steps 4 and 5 are judgments no argument can carry. It exits nonzero until a human finishes them. Running the steps by hand is equally correct.
+
 #### Step 0: Establish the repo  (skip if the target folder is already a git repo)
 ```
 git -C <target> rev-parse --show-toplevel    # names the repo root, or fails

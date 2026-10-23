@@ -25,6 +25,7 @@ runbooks/
 scripts/
   verify-adoption.sh          ← mechanical checks for RB-05's definition of done
   pin-drift.sh                ← reports each consuming repo's pin against main (maintenance rule 3)
+  new-repo.sh                 ← mechanical half of RB-05 adoption; never writes CLAUDE.md
 ```
 
 ## Home & deployment
