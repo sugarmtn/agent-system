@@ -15,6 +15,8 @@ Standardize first-time adoption so every governed repo loads AGENT.md the same w
 
 ### Procedure
 
+`scripts/new-repo.sh --target <path> --scope <text> --pin <sha>` performs the mechanical parts of Steps 0, 1 and 6 and refuses to do the rest: it never writes `CLAUDE.md` and never commits, because Steps 4 and 5 are judgments no argument can carry. It exits nonzero until a human finishes them. Running the steps by hand is equally correct.
+
 #### Step 1: Add the submodule at the chosen SHA
 ```
 git submodule add https://github.com/sugarmtn/agent-system.git agent-system
