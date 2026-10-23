@@ -1,6 +1,6 @@
 # Agent Instruction System
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-22
+**Owner:** Alan Strutz | **Last updated:** 2026-10-23
 
 A modular instruction set for AI sessions built on progressive disclosure: a small core is always loaded; everything else loads only when the task requires it.
 
@@ -15,6 +15,7 @@ templates/
   BUILD-TEMPLATE.md
   REF-TEMPLATE.md             ← module-scoped facts, cited by one BUILD module by default (SPEC-AND-BUILD §1c)
   RUNBOOK-TEMPLATE.md
+  CLAUDE-TEMPLATE.md          ← a consuming repo's CLAUDE.md: import, pin, adoption boundary (RB-05)
 runbooks/
   RB-01-data-ingestion.md     ← loaded per task routing (AGENT.md §2)
   RB-02-app-development.md
