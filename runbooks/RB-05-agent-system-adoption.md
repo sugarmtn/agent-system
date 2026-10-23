@@ -92,6 +92,8 @@ Confirm .claude/settings.local.json is gitignored (machine-specific paths).
 **If it fails:** If doc reconciliation from Step 5 is large enough to obscure the adoption itself, split it: adoption first, reconciliation second, per RB-03 discipline (one concern per change).
 
 ### Verification (definition of done)
+`scripts/verify-adoption.sh <repo-path>` runs the mechanical checks below and exits nonzero on failure. It deliberately does not cover the fresh-session load test or the §4 naming check — it reports those as not checked rather than passing them.
+
 - [ ] `git submodule status` reports the intended SHA, and it matches the SHA recorded in `CLAUDE.md`
 - [ ] A fresh session in the repo has AGENT.md loaded via the `@` import — verified by opening one, not by reading the file
 - [ ] `CLAUDE.md` records the pinned-on date and the RB-03 pin-advance rule

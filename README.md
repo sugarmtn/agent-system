@@ -22,6 +22,8 @@ runbooks/
   RB-03-code-maintenance.md
   RB-04-common-tasks.md       ← four mini-procedures; load only the matching section
   RB-05-agent-system-adoption.md  ← first-time adoption of this system by a repo
+scripts/
+  verify-adoption.sh          ← mechanical checks for RB-05's definition of done
 ```
 
 ## Home & deployment
