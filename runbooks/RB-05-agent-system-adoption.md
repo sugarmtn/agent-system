@@ -44,6 +44,8 @@ git add .gitmodules agent-system
 
 #### Step 2: Wire `CLAUDE.md` so AGENT.md actually loads
 ```
+Start from templates/CLAUDE-TEMPLATE.md if the repo has no CLAUDE.md yet.
+
 Add as the first line of the governance section of the repo's CLAUDE.md:
 
 @agent-system/AGENT.md
@@ -53,22 +55,16 @@ Add as the first line of the governance section of the repo's CLAUDE.md:
 
 #### Step 3: Record the pin and its date in `CLAUDE.md`
 ```
-| | |
-|---|---|
-| Agent-system pin | `<full 40-char sha>` |
-| Pinned on | <date> |
-
-Plus one sentence: advancing this pin is a deliberate RB-03 change, never
-passive — `git -C agent-system fetch && git -C agent-system checkout <new-sha>`,
-committed on its own.
+Fill the pin table and pin-advance sentence from templates/CLAUDE-TEMPLATE.md
+with the full 40-char SHA from Step 1 and today's date.
 ```
 **Expected result:** The SHA in `CLAUDE.md` matches `git submodule status` exactly. Sessions have the value they must record in the closeout `Governed by:` line (AGENT.md §5.2) without inspecting git.
 **If it fails:** A mismatch between the recorded SHA and the gitlink means one was advanced without the other. Correct both to the intended pin in the same change and state which was wrong.
 
 #### Step 4: Declare the adoption boundary
 ```
-In CLAUDE.md, state repo scope as a folder → system table, and name
-explicitly any folder that predates adoption and is NOT yet governed.
+Fill the adoption boundary table from templates/CLAUDE-TEMPLATE.md: every
+top-level folder named as governed or as not-yet-governed.
 ```
 **Expected result:** A fresh session can tell from `CLAUDE.md` alone which parts of the repo follow agent-system conventions. Unmigrated folders are named as unmigrated, with their migration identified as a separate future task.
 **If it fails:** If the boundary cannot be stated because nobody knows which folders were built under which conventions, that is the finding — record it as an Open Item with a named owner rather than guessing. An unstated boundary lets a session assume conventions hold where they do not.
