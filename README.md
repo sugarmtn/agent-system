@@ -1,6 +1,6 @@
 # Agent Instruction System
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-22
+**Owner:** Alan Strutz | **Last updated:** 2026-10-23
 
 A modular instruction set for AI sessions built on progressive disclosure: a small core is always loaded; everything else loads only when the task requires it.
 
@@ -21,6 +21,8 @@ runbooks/
   RB-03-code-maintenance.md
   RB-04-common-tasks.md       ← four mini-procedures; load only the matching section
   RB-05-agent-system-adoption.md  ← first-time adoption of this system by a repo
+scripts/
+  verify-adoption.sh          ← mechanical checks for RB-05's definition of done
 ```
 
 ## Home & deployment

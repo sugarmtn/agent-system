@@ -1,6 +1,6 @@
 # RB-05 — Agent-System Adoption
 
-**Owner:** Alan Strutz | **Last updated:** 2026-09-22
+**Owner:** Alan Strutz | **Last updated:** 2026-10-23
 **Applies to:** Bringing a repo under agent-system governance for the first time — submodule pin, `CLAUDE.md` wiring, and reconciling existing docs to the SPEC-AND-BUILD §4 naming scheme. **Not** advancing an existing pin (that is an RB-03 change, README "Home & deployment"), and not repos that host no system a SPEC/BUILD would describe.
 **Load with:** AGENT.md + the agent-system README ("Home & deployment", "Project layering"). Change Gate per AGENT.md §3 — adoption is normally exempt (repo configuration, no production system touched); declare the exemption at the start.
 
@@ -78,6 +78,8 @@ Confirm .claude/settings.local.json is gitignored (machine-specific paths).
 **If it fails:** If doc reconciliation from Step 5 is large enough to obscure the adoption itself, split it: adoption first, reconciliation second, per RB-03 discipline (one concern per change).
 
 ### Verification (definition of done)
+`scripts/verify-adoption.sh <repo-path>` runs the mechanical checks below and exits nonzero on failure. It deliberately does not cover the fresh-session load test or the §4 naming check — it reports those as not checked rather than passing them.
+
 - [ ] `git submodule status` reports the intended SHA, and it matches the SHA recorded in `CLAUDE.md`
 - [ ] A fresh session in the repo has AGENT.md loaded via the `@` import — verified by opening one, not by reading the file
 - [ ] `CLAUDE.md` records the pinned-on date and the RB-03 pin-advance rule
