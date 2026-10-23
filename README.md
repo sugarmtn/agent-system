@@ -24,6 +24,7 @@ runbooks/
   RB-05-agent-system-adoption.md  ← first-time adoption of this system by a repo
 scripts/
   verify-adoption.sh          ← mechanical checks for RB-05's definition of done
+  pin-drift.sh                ← reports each consuming repo's pin against main (maintenance rule 3)
 ```
 
 ## Home & deployment
@@ -70,4 +71,4 @@ A project gets its own runbook **only** for a recurring procedure with genuinely
 
 1. All documents are living files updated in place — git history is the change record; there are no version suffixes or superseded copies. Changes refresh the last-updated date and go through PR review by a human approver with RB-03 discipline (smallest change, one concern per change).
 2. When a session hits a failure mode no runbook covers, the closeout should propose the runbook addition — runbooks grow from real incidents (including break-glass incidents, AGENT.md §3b), not speculation.
-3. Review cadence: quarterly, or after any escalation caused by an instruction gap. The quarterly review includes a sweep of consuming repos for stale agent-system pins.
+3. Review cadence: quarterly, or after any escalation caused by an instruction gap. The quarterly review includes a sweep of consuming repos for stale agent-system pins — run `scripts/pin-drift.sh <search-root>`, which reports each repo's pin, its recorded pinned-on date, and how far behind main it sits. It reports only; a pin behind main is a deliberate choice, and advancing one is its own RB-03 change.
